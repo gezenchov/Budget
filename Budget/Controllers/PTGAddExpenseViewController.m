@@ -62,8 +62,15 @@
 
 - (void)addRecord {
     NSLog(@"%@", self.datePicker.date);
+    
+    NSDateComponents *components = [[NSCalendar currentCalendar]
+                                    components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                    fromDate:self.datePicker.date];
+    NSDate *startDate = [[NSCalendar currentCalendar]
+                         dateFromComponents:components];
+    
     Type *type = [Type createTypeWithTitle:self.formVC.typeTextField.text];
-    [Expense createExpenseWithAmount:@(self.formVC.amountTextField.text.doubleValue) description:self.formVC.descriptionTextField.text type:type date:self.datePicker.date];
+    [Expense createExpenseWithAmount:@(self.formVC.amountTextField.text.doubleValue) description:self.formVC.descriptionTextField.text type:type date:startDate];
     
     [self close];
 }
