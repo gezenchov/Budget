@@ -1,5 +1,5 @@
 //
-//  ViewController.m
+//  PTGAddExpenseViewController.m
 //  Budget
 //
 //  Created by Petar Gezenchov on 07/02/2016.
@@ -8,6 +8,9 @@
 
 #import "PTGAddExpenseViewController.h"
 #import "PTGAddExpenseFormTableViewController.h"
+#import "Expense.h"
+#import "Type.h"
+
 
 @interface PTGAddExpenseViewController () <AddExpenseFormProtocol>
 
@@ -18,10 +21,13 @@
 
 @implementation PTGAddExpenseViewController
 
+#pragma mark - View Life Cycle methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self.formVC updateDateTextFieldWithValue:self.datePicker.date];
+    
+    [self updateDateTextFieldWithDate:self.datePicker.date];
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -33,20 +39,52 @@
     }
 }
 
+
+#pragma mark - AddExpenseFormProtocol methods
+
 - (void)didSelectDatePickerField:(BOOL)selected {
     self.datePicker.hidden = !selected;
 }
 
-- (void)addRecord {
-    NSLog(@"%@", self.datePicker.date);
-}
-
-- (IBAction)addButtonPressed:(id)sender {
+- (void)doneEnteringData {
     [self addRecord];
 }
 
+#pragma mark - Private methods
+
+- (void)updateDateTextFieldWithDate:(NSDate*)date {
+    NSDateFormatter *df = [NSDateFormatter new];
+    [df setDateFormat:@"dd LLLL yyyy"];
+    NSString *formattedDate = [df stringFromDate:date];
+    
+    self.formVC.dateTextField.text = formattedDate;
+}
+
+- (void)addRecord {
+    NSLog(@"%@", self.datePicker.date);
+    Type *type = [Type createTypeWithTitle:self.formVC.typeTextField.text];
+    [Expense createExpenseWithAmount:@(self.formVC.amountTextField.text.doubleValue) description:self.formVC.descriptionTextField.text type:type date:self.datePicker.date];
+    
+    [self close];
+}
+
+- (void)close {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - IBAction methods
+
+- (IBAction)addButtonPressed:(id)sender {
+    [self addRecord];
+    [self close];
+}
+
 - (IBAction)datePickerValueChanged:(id)sender {
-    [self.formVC updateDateTextFieldWithValue:self.datePicker.date];
+    [self updateDateTextFieldWithDate:self.datePicker.date];
+}
+
+- (IBAction)closeButtonPressed:(id)sender {
+    [self close];
 }
 
 @end

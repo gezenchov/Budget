@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  PTGAddExpenseViewController.h
 //  Budget
 //
 //  Created by Petar Gezenchov on 07/02/2016.

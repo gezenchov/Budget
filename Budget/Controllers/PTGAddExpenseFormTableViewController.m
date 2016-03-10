@@ -18,11 +18,6 @@ typedef enum : NSUInteger {
 
 @interface PTGAddExpenseFormTableViewController () <UITextFieldDelegate, BSKeyboardControlsDelegate>
 
-@property (nonatomic, weak) IBOutlet UITextField *amountTextField;
-@property (nonatomic, weak) IBOutlet UITextField *descriptionTextField;
-@property (nonatomic, weak) IBOutlet UITextField *typeTextField;
-@property (nonatomic, weak) IBOutlet UITextField *dateTextField;
-
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 
 @end
@@ -36,10 +31,12 @@ static CGFloat kAmountInactiveRowHegiht = 100.0f;
 static CGFloat kTextActiveRowHeignt = 100.0f;
 static CGFloat kTextInactiveRowHeignt = 80.0f;
 
+#pragma mark - View Life Cycle methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSArray *fields = @[ self.amountTextField, self.descriptionTextField, self.typeTextField, self.dateTextField];
+    NSArray *fields = @[self.amountTextField, self.descriptionTextField, self.typeTextField, self.dateTextField];
     
     [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:fields]];
     [self.keyboardControls setDelegate:self];
@@ -47,12 +44,14 @@ static CGFloat kTextInactiveRowHeignt = 80.0f;
     [self.amountTextField becomeFirstResponder];
 }
 
+#pragma mark - UITableViewDelegate methods
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0;
+    return 0.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,6 +63,8 @@ static CGFloat kTextInactiveRowHeignt = 80.0f;
         return (self.keyboardControls.activeField.tag == indexPath.row) ? kTextActiveRowHeignt : kTextInactiveRowHeignt;
     }
 }
+
+#pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     return textField.tag == AmountTextField ? [self isValidFloatString:[textField.text stringByReplacingCharactersInRange:range withString:string]] : YES;
@@ -92,6 +93,12 @@ static CGFloat kTextInactiveRowHeignt = 80.0f;
     return YES;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.delegate doneEnteringData];
+    
+    return YES;
+}
+
 - (void)keyboardControls:(BSKeyboardControls *)keyboardControls selectedField:(UIView *)field inDirection:(BSKeyboardControlsDirection)direction
 {
     UIView *view = keyboardControls.activeField.superview.superview;
@@ -104,21 +111,15 @@ static CGFloat kTextInactiveRowHeignt = 80.0f;
     [self.delegate doneEnteringData];
 }
 
+#pragma mark - Private methods
+
+
 - (BOOL)isValidFloatString:(NSString *)str
 {
     const char *s = str.UTF8String;
     char *end;
     strtod(s, &end);
     return !end[0];
-}
-
-
-- (void)updateDateTextFieldWithValue:(NSDate*)date {
-    NSDateFormatter *df = [NSDateFormatter new];
-    [df setDateFormat:@"dd LLLL yyyy"];
-    NSString *formattedDate = [df stringFromDate:date];
-    
-    self.dateTextField.text = formattedDate;
 }
 
 @end

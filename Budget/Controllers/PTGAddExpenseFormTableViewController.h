@@ -19,6 +19,9 @@
 
 @property (nonatomic, weak) id<AddExpenseFormProtocol> delegate;
 
-- (void)updateDateTextFieldWithValue:(NSDate*)date;
+@property (nonatomic, weak) IBOutlet UITextField *amountTextField;
+@property (nonatomic, weak) IBOutlet UITextField *descriptionTextField;
+@property (nonatomic, weak) IBOutlet UITextField *typeTextField;
+@property (nonatomic, weak) IBOutlet UITextField *dateTextField;
 
 @end
