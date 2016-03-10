@@ -35,23 +35,6 @@ static NSString * const kDatabaseName       = @"Model.sqlite";
 
 #pragma mark - Core Data stack
 
-+ (id)sharedInstance
-{
-    // structure used to test whether the block has completed or not
-    static dispatch_once_t p = 0;
-    
-    // initialize sharedObject as nil (first call only)
-    __strong static id _sharedObject = nil;
-    
-    // executes a block object once and only once for the lifetime of an application
-    dispatch_once(&p, ^{
-        _sharedObject = [[self alloc] init];
-    });
-    
-    // returns the same object each time
-    return _sharedObject;
-}
-
 // Used to propegate saves to the persistent store (disk) without blocking the UI
 - (NSManagedObjectContext *)masterManagedObjectContext
 {
@@ -188,7 +171,7 @@ static NSString * const kDatabaseName       = @"Model.sqlite";
 			// exist and a copy of the db (with the same name) exists in the bundle, it'll be copied over and used.  This
 			// is useful for the initial seeding of data in the app.
             NSURL *storeURL = [self storeURL];
-            [self copyDatabaseIfNeededToURL:storeURL];
+//            [self copyDatabaseIfNeededToURL:storeURL];
             
             _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 

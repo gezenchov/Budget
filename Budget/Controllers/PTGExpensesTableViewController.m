@@ -7,13 +7,20 @@
 //
 
 #import "PTGExpensesTableViewController.h"
+#import "PTGApplicationManager.h"
 #import "PTGExpenseCell.h"
 
-@interface PTGExpensesTableViewController () <UITableViewDataSource>
+#import <CoreData/CoreData.h>
+
+
+@interface PTGExpensesTableViewController () <UITableViewDataSource, NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
 @implementation PTGExpensesTableViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,10 +28,26 @@
     [self performSegueWithIdentifier:@"AddExpenseSegue" sender:nil];
 }
 
-- (IBAction)addButtonPressed:(id)sender {
-    NSLog(@"Add");
+#pragma mark - Private methods
+
+- (void)initializeFetchedResultsController
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Person"];
     
-    [self performSegueWithIdentifier:@"AddExpenseSegue" sender:nil];
+    NSSortDescriptor *lastNameSort = [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES];
+    
+    [request setSortDescriptors:@[lastNameSort]];
+    
+    NSManagedObjectContext *moc = [PTGApplicationManager sharedManager].coreDataManager.masterManagedObjectContext; //Retrieve the main queue NSManagedObjectContext
+    
+    [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:moc sectionNameKeyPath:nil cacheName:nil]];
+    [[self fetchedResultsController] setDelegate:self];
+    
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -66,6 +89,15 @@
     cell.typeLabel.text = @"lichni";
     
     return cell;
+}
+
+
+#pragma mark - Action methods
+
+- (IBAction)addButtonPressed:(id)sender {
+    NSLog(@"Add");
+    
+    [self performSegueWithIdentifier:@"AddExpenseSegue" sender:nil];
 }
 
 @end

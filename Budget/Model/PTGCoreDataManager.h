@@ -13,7 +13,6 @@
 
 @interface PTGCoreDataManager : NSObject
 
-+ (id)sharedInstance;
 
 - (NSURL *)storeURL;
 - (NSString *)storePath;

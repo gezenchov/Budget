@@ -8,7 +8,7 @@
 
 #import "Expense.h"
 #import "Type.h"
-#import "PTGCoreDataManager.h"
+#import "PTGApplicationManager.h"
 
 @implementation Expense
 
@@ -16,7 +16,7 @@
 
 + (Expense*)createExpenseWithAmount:(NSNumber *)amount description:(NSString *)descriptionText type:(Type *)type date:(NSDate *)date {
     
-    PTGCoreDataManager *coreDataManager = [PTGCoreDataManager sharedInstance];
+    PTGCoreDataManager *coreDataManager = [PTGApplicationManager sharedManager].coreDataManager;
     Expense *expense = [PTGCoreDataManager insertNewObjectForEntityForName:@"Expense"
                                                    inManagedObjectContext:coreDataManager.masterManagedObjectContext];
 

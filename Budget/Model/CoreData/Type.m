@@ -8,7 +8,8 @@
 
 #import "Type.h"
 #import "Expense.h"
-#import "PTGCoreDataManager.h"
+#import "PTGApplicationManager.h"
+
 
 @implementation Type
 
@@ -16,7 +17,7 @@
 
 + (Type*)createTypeWithTitle:(NSString*)title {
     
-    PTGCoreDataManager *coreDataManager = [PTGCoreDataManager sharedInstance];
+    PTGCoreDataManager *coreDataManager = [PTGApplicationManager sharedManager].coreDataManager;
     Type *type = [PTGCoreDataManager insertNewObjectForEntityForName:@"Type"
                                                     inManagedObjectContext:coreDataManager.masterManagedObjectContext];
     
