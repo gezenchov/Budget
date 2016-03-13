@@ -66,6 +66,7 @@
     NSDateComponents *components = [[NSCalendar currentCalendar]
                                     components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                     fromDate:self.datePicker.date];
+    [components setTimeZone:[NSTimeZone defaultTimeZone]];
     NSDate *startDate = [[NSCalendar currentCalendar]
                          dateFromComponents:components];
     

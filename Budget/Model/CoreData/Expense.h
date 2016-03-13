@@ -19,8 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (Expense*)createExpenseWithAmount:(NSNumber *)amount description:(NSString*)descriptionText type:(Type*)type date:(NSDate*)date;
 
+
 @end
 
 NS_ASSUME_NONNULL_END
 
-#import "Expenses+CoreDataProperties.h"
+#import "Expense+CoreDataProperties.h"

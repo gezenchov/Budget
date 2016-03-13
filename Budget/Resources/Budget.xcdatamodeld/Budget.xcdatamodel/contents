@@ -3,6 +3,7 @@
     <entity name="Expense" representedClassName="Expense" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dayTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Type" inverseName="expenses" inverseEntity="Type" syncable="YES"/>
     </entity>
@@ -11,7 +12,7 @@
         <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Expense" inverseName="type" inverseEntity="Expense" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Expense" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Expense" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Type" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

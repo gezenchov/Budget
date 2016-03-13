@@ -24,6 +24,12 @@
     expense.descriptionText = descriptionText;
     expense.type = type;
     expense.date = date;
+    
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd MMMM"];
+    
+    expense.dayTitle = [dateFormat stringFromDate:date];
 
     [coreDataManager save];
 

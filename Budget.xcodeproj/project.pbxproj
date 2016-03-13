@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		422A386A79C6C235718A2229 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1337C019639F3077BCD1E25A /* libPods.a */; };
 		DE1ABE2F1C92241F00AB65C0 /* PTGApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1ABE2E1C92241F00AB65C0 /* PTGApplicationManager.m */; };
+		DE1ABE5C1C9596C500AB65C0 /* PTGExpenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1ABE5A1C9596C500AB65C0 /* PTGExpenseCell.m */; };
+		DE1ABE701C9597CA00AB65C0 /* Expense+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1ABE6F1C9597CA00AB65C0 /* Expense+CoreDataProperties.m */; };
+		DE1ABE731C959AB000AB65C0 /* PTGExpensesSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE1ABE721C959AB000AB65C0 /* PTGExpensesSectionCell.m */; };
 		DE51F7871C676F08009B9C2A /* BudgetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DE51F7861C676F08009B9C2A /* BudgetTests.m */; };
 		DE51F7921C676F08009B9C2A /* BudgetUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DE51F7911C676F08009B9C2A /* BudgetUITests.m */; };
 		DEE753CA1C77AF4000EBD73C /* PTGAddExpenseFormTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE753B81C77AF4000EBD73C /* PTGAddExpenseFormTableViewController.m */; };
@@ -21,12 +24,10 @@
 		DEE753E61C77AF9400EBD73C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE753E31C77AF9400EBD73C /* main.m */; };
 		DEE753E91C77B0A500EBD73C /* PTGExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE753E81C77B0A500EBD73C /* PTGExpensesTableViewController.m */; };
 		DEE754041C77C2FE00EBD73C /* PTGCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE754031C77C2FE00EBD73C /* PTGCoreDataManager.m */; };
-		DEE754111C77C38500EBD73C /* Expenses+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE7540A1C77C38500EBD73C /* Expenses+CoreDataProperties.m */; };
 		DEE754121C77C38500EBD73C /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE7540C1C77C38500EBD73C /* Expense.m */; };
 		DEE754131C77C38500EBD73C /* Type+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE7540E1C77C38500EBD73C /* Type+CoreDataProperties.m */; };
 		DEE754141C77C38500EBD73C /* Type.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE754101C77C38500EBD73C /* Type.m */; };
 		DEE754181C77C4AE00EBD73C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE754171C77C4AE00EBD73C /* NSFileManager+DoNotBackup.m */; };
-		DEE7541B1C77C93800EBD73C /* PTGExpenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE7541A1C77C93800EBD73C /* PTGExpenseCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,12 @@
 		8BE309D9D572B5F3EB94A0DF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DE1ABE2D1C92241F00AB65C0 /* PTGApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGApplicationManager.h; sourceTree = "<group>"; };
 		DE1ABE2E1C92241F00AB65C0 /* PTGApplicationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGApplicationManager.m; sourceTree = "<group>"; };
+		DE1ABE591C9596C500AB65C0 /* PTGExpenseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGExpenseCell.h; sourceTree = "<group>"; };
+		DE1ABE5A1C9596C500AB65C0 /* PTGExpenseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGExpenseCell.m; sourceTree = "<group>"; };
+		DE1ABE6E1C9597CA00AB65C0 /* Expense+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Expense+CoreDataProperties.h"; sourceTree = "<group>"; };
+		DE1ABE6F1C9597CA00AB65C0 /* Expense+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Expense+CoreDataProperties.m"; sourceTree = "<group>"; };
+		DE1ABE711C959AB000AB65C0 /* PTGExpensesSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGExpensesSectionCell.h; sourceTree = "<group>"; };
+		DE1ABE721C959AB000AB65C0 /* PTGExpensesSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGExpensesSectionCell.m; sourceTree = "<group>"; };
 		DE51F7661C676F08009B9C2A /* Budget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE51F7821C676F08009B9C2A /* BudgetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudgetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE51F7861C676F08009B9C2A /* BudgetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BudgetTests.m; sourceTree = "<group>"; };
@@ -75,8 +82,6 @@
 		DEE753E81C77B0A500EBD73C /* PTGExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGExpensesTableViewController.m; sourceTree = "<group>"; };
 		DEE754021C77C2FE00EBD73C /* PTGCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGCoreDataManager.h; sourceTree = "<group>"; };
 		DEE754031C77C2FE00EBD73C /* PTGCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGCoreDataManager.m; sourceTree = "<group>"; };
-		DEE754091C77C38500EBD73C /* Expenses+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Expenses+CoreDataProperties.h"; sourceTree = "<group>"; };
-		DEE7540A1C77C38500EBD73C /* Expenses+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Expenses+CoreDataProperties.m"; sourceTree = "<group>"; };
 		DEE7540B1C77C38500EBD73C /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
 		DEE7540C1C77C38500EBD73C /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 		DEE7540D1C77C38500EBD73C /* Type+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Type+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -85,8 +90,6 @@
 		DEE754101C77C38500EBD73C /* Type.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Type.m; sourceTree = "<group>"; };
 		DEE754161C77C4AE00EBD73C /* NSFileManager+DoNotBackup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DoNotBackup.h"; sourceTree = "<group>"; };
 		DEE754171C77C4AE00EBD73C /* NSFileManager+DoNotBackup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DoNotBackup.m"; sourceTree = "<group>"; };
-		DEE754191C77C93800EBD73C /* PTGExpenseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGExpenseCell.h; sourceTree = "<group>"; };
-		DEE7541A1C77C93800EBD73C /* PTGExpenseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGExpenseCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +133,26 @@
 				1337C019639F3077BCD1E25A /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE1ABE5D1C9596CD00AB65C0 /* Add Expense */ = {
+			isa = PBXGroup;
+			children = (
+				DEE753B71C77AF4000EBD73C /* PTGAddExpenseFormTableViewController.h */,
+				DEE753B81C77AF4000EBD73C /* PTGAddExpenseFormTableViewController.m */,
+				DEE753B91C77AF4000EBD73C /* PTGAddExpenseViewController.h */,
+				DEE753BA1C77AF4000EBD73C /* PTGAddExpenseViewController.m */,
+			);
+			name = "Add Expense";
+			sourceTree = "<group>";
+		};
+		DE1ABE5E1C9596DD00AB65C0 /* Expenses */ = {
+			isa = PBXGroup;
+			children = (
+				DEE753E71C77B0A500EBD73C /* PTGExpensesTableViewController.h */,
+				DEE753E81C77B0A500EBD73C /* PTGExpensesTableViewController.m */,
+			);
+			name = Expenses;
 			sourceTree = "<group>";
 		};
 		DE51F75D1C676F08009B9C2A = {
@@ -188,14 +211,8 @@
 		DEE753B61C77AF4000EBD73C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DEE753E71C77B0A500EBD73C /* PTGExpensesTableViewController.h */,
-				DEE753E81C77B0A500EBD73C /* PTGExpensesTableViewController.m */,
-				DEE753B71C77AF4000EBD73C /* PTGAddExpenseFormTableViewController.h */,
-				DEE753B81C77AF4000EBD73C /* PTGAddExpenseFormTableViewController.m */,
-				DEE753B91C77AF4000EBD73C /* PTGAddExpenseViewController.h */,
-				DEE753BA1C77AF4000EBD73C /* PTGAddExpenseViewController.m */,
-				DEE754191C77C93800EBD73C /* PTGExpenseCell.h */,
-				DEE7541A1C77C93800EBD73C /* PTGExpenseCell.m */,
+				DE1ABE5E1C9596DD00AB65C0 /* Expenses */,
+				DE1ABE5D1C9596CD00AB65C0 /* Add Expense */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -215,6 +232,10 @@
 		DEE753C91C77AF4000EBD73C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DE1ABE591C9596C500AB65C0 /* PTGExpenseCell.h */,
+				DE1ABE5A1C9596C500AB65C0 /* PTGExpenseCell.m */,
+				DE1ABE711C959AB000AB65C0 /* PTGExpensesSectionCell.h */,
+				DE1ABE721C959AB000AB65C0 /* PTGExpensesSectionCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -244,8 +265,8 @@
 		DEE754081C77C38500EBD73C /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				DEE754091C77C38500EBD73C /* Expenses+CoreDataProperties.h */,
-				DEE7540A1C77C38500EBD73C /* Expenses+CoreDataProperties.m */,
+				DE1ABE6E1C9597CA00AB65C0 /* Expense+CoreDataProperties.h */,
+				DE1ABE6F1C9597CA00AB65C0 /* Expense+CoreDataProperties.m */,
 				DEE7540B1C77C38500EBD73C /* Expense.h */,
 				DEE7540C1C77C38500EBD73C /* Expense.m */,
 				DEE7540D1C77C38500EBD73C /* Type+CoreDataProperties.h */,
@@ -448,18 +469,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEE754121C77C38500EBD73C /* Expense.m in Sources */,
+				DE1ABE701C9597CA00AB65C0 /* Expense+CoreDataProperties.m in Sources */,
 				DEE753E61C77AF9400EBD73C /* main.m in Sources */,
 				DE1ABE2F1C92241F00AB65C0 /* PTGApplicationManager.m in Sources */,
 				DEE754041C77C2FE00EBD73C /* PTGCoreDataManager.m in Sources */,
+				DE1ABE5C1C9596C500AB65C0 /* PTGExpenseCell.m in Sources */,
 				DEE753E41C77AF9400EBD73C /* AppDelegate.m in Sources */,
 				DEE753E91C77B0A500EBD73C /* PTGExpensesTableViewController.m in Sources */,
-				DEE754111C77C38500EBD73C /* Expenses+CoreDataProperties.m in Sources */,
 				DEE754141C77C38500EBD73C /* Type.m in Sources */,
+				DE1ABE731C959AB000AB65C0 /* PTGExpensesSectionCell.m in Sources */,
 				DEE754181C77C4AE00EBD73C /* NSFileManager+DoNotBackup.m in Sources */,
 				DEE754131C77C38500EBD73C /* Type+CoreDataProperties.m in Sources */,
 				DEE753CA1C77AF4000EBD73C /* PTGAddExpenseFormTableViewController.m in Sources */,
 				DEE753CB1C77AF4000EBD73C /* PTGAddExpenseViewController.m in Sources */,
-				DEE7541B1C77C93800EBD73C /* PTGExpenseCell.m in Sources */,
 				DEE753DE1C77AF8900EBD73C /* Budget.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

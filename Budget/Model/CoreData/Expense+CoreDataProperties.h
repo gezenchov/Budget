@@ -1,8 +1,8 @@
 //
-//  Expenses+CoreDataProperties.h
+//  Expense+CoreDataProperties.h
 //  
 //
-//  Created by Petar Gezenchov on 19/02/2016.
+//  Created by Petar Gezenchov on 13/03/2016.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *amount;
 @property (nullable, nonatomic, retain) NSDate *date;
 @property (nullable, nonatomic, retain) NSString *descriptionText;
+@property (nullable, nonatomic, retain) NSString *dayTitle;
 @property (nullable, nonatomic, retain) Type *type;
 
 @end

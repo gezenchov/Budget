@@ -9,9 +9,16 @@
 #import "PTGExpensesTableViewController.h"
 #import "PTGApplicationManager.h"
 #import "PTGExpenseCell.h"
+#import "PTGExpensesSectionCell.h"
 #import "Expense.h"
+#import "Type.h"
 
 #import <CoreData/CoreData.h>
+
+typedef enum : NSUInteger {
+    ExpensesCellSection,
+    ExpensesCellTotal,
+} ExpensesCell;
 
 
 @interface PTGExpensesTableViewController () <UITableViewDataSource, NSFetchedResultsControllerDelegate>
@@ -28,6 +35,8 @@
     
     [self initializeFetchedResultsController];
     
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    
     [self performSegueWithIdentifier:@"AddExpenseSegue" sender:nil];
 }
 
@@ -37,7 +46,7 @@
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Expense"];
     
-    NSSortDescriptor *dateSort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
+    NSSortDescriptor *dateSort = [NSSortDescriptor sortDescriptorWithKey:@"dayTitle" ascending:YES];
     
     
     NSSortDescriptor *dateSort1 = [NSSortDescriptor sortDescriptorWithKey:@"amount" ascending:YES];
@@ -46,13 +55,41 @@
     
     NSManagedObjectContext *moc = [PTGApplicationManager sharedManager].coreDataManager.masterManagedObjectContext; //Retrieve the main queue NSManagedObjectContext
     
-    [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:moc sectionNameKeyPath:@"date" cacheName:nil]];
+    [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:moc sectionNameKeyPath:@"dayTitle" cacheName:nil]];
     [[self fetchedResultsController] setDelegate:self];
     
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error]) {
         NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
         abort();
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return 40.0f;
+    }
+    
+    return 50.0f;
+}
+
+// Override to support conditional editing of the table view.
+// This only needs to be implemented if you are going to be returning NO
+// for some items. By default, all items are editable.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return indexPath.row != 0;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        [[PTGApplicationManager sharedManager].coreDataManager.masterManagedObjectContext deleteObject:[[self fetchedResultsController] objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section]]];
+        
+        [[PTGApplicationManager sharedManager].coreDataManager save];
+        
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
@@ -64,35 +101,67 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id< NSFetchedResultsSectionInfo> sectionInfo = [[self fetchedResultsController] sections][section];
-    return [sectionInfo numberOfObjects];
+    return [sectionInfo numberOfObjects] + ExpensesCellTotal;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *emailTableIdentifier = @"ExpenseCell";
     
-    PTGExpenseCell *cell = (PTGExpenseCell *)[tableView dequeueReusableCellWithIdentifier:emailTableIdentifier];
-    
-    if (cell == nil) {
-        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ExpenseCell" owner:self options:nil];
+    if (indexPath.row == ExpensesCellSection) {
+        static NSString *emailTableIdentifier = @"ExpensesSectionCell";
         
-        cell = [nibArray objectAtIndex:0];
+        PTGExpensesSectionCell *cell = (PTGExpensesSectionCell *)[tableView dequeueReusableCellWithIdentifier:emailTableIdentifier];
+        
+        if (cell == nil) {
+            NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ExpensesSectionCell" owner:self options:nil];
+            
+            cell = [nibArray objectAtIndex:0];
+        }
+        
+        
+        Expense *expense = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSArray *expensesInSection = [[self fetchedResultsController].sections[indexPath.section] objects];
+        
+        
+        [cell setupWithDate:expense.dayTitle total:[expensesInSection valueForKeyPath:@"@sum.amount"]];
+        
+        return cell;
     }
-    
-    [self configureCell:cell atIndexPath:indexPath];
-
-    return cell;
-}
-
-- (void)configureCell:(id)aCell atIndexPath:(NSIndexPath*)indexPath
-{
-    PTGExpenseCell *cell = aCell;
-    Expense *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    
-    cell.amountLabel.text = object.amount.stringValue;
-    cell.descriptionLabel.text = object.descriptionText;
-    cell.typeLabel.text = @"test";
-    
-    // Populate cell from the NSManagedObject instance
+    else {
+        static NSString *emailTableIdentifier = @"ExpenseCell";
+        
+        PTGExpenseCell *cell = (PTGExpenseCell *)[tableView dequeueReusableCellWithIdentifier:emailTableIdentifier];
+        
+        if (cell == nil) {
+            NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ExpenseCell" owner:self options:nil];
+            
+            cell = [nibArray objectAtIndex:0];
+        }
+        
+        NSIndexPath *offsetIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        Expense *expense = [[self fetchedResultsController] objectAtIndexPath:offsetIndexPath];
+        
+        [cell setupWithExpense:expense];
+        
+        return cell;
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -116,6 +185,7 @@
 }
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
+    NSInteger section = indexPath ? indexPath.section : newIndexPath.section;
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [[self tableView] insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -123,14 +193,25 @@
         case NSFetchedResultsChangeDelete:
             [[self tableView] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[[self tableView] cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+        case NSFetchedResultsChangeUpdate: {
+//            if (indexPath.row == ExpensesCellSection) {
+                [[self tableView] cellForRowAtIndexPath:indexPath];
+//                tet
+////                [self configureCell:[[self tableView] cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+//            }
+//            else {
+////                [self configureCell:[[self tableView] cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+//            }
+            
+        }
             break;
         case NSFetchedResultsChangeMove:
             [[self tableView] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [[self tableView] insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
+    
+//    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:section]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
